@@ -1,0 +1,17 @@
+利用jvm动态获取对象内存
+
+第一步:	创建类 添加方法public static void premain(String agentArgs,Instrumentation instrumentation)  利用该方法可以获取Instrumentation
+
+第二步: 利用Instrumentation 的getObjectSize(Object)方法得到对象的内存大小
+
+第三步: 创建META-INF/MANIFEST.MF文件
+		在文件中写
+			Manifest-Version: 1.0
+			Premain-Class: com.sundy.disruptor.util.MemoryCalculator
+			Main-Class: com.sundy.disruptor.CalculateTest
+			Can-Redefine-Classes: true
+			
+第四步: 打包 指定MANIFEST.MF文件
+
+第五步: 配置执行环境  java -javaagent:jarFilePath.jar -jar 执行jar包
+				如 java -javaagent:disruptor.jar -jar disruptor.jar
