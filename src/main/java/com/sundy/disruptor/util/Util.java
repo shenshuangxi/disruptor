@@ -49,4 +49,12 @@ public final class Util {
 		return getMinimumSequence(sequences, Long.MAX_VALUE);
 	}
 
+	public static int log2(int bufferSize) {
+		int r = 0;
+		while((bufferSize>>=1)!=0){
+			++r;
+		}
+		return r;
+	}
+
 }

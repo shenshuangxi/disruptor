@@ -84,8 +84,9 @@ public interface Sequencer extends Cursored {
 	/**
 	 * 确认序号已发布，且事件时可用，非阻塞调用
 	 * @param sequence
+	 * @return 
 	 */
-	void isAvailable(long sequence);
+	boolean isAvailable(long sequence);
 	
 	/**
 	 * 向当前Disruptor实例添加一个具体的门序号(gating sequence),这个序号会安全并自动的添加到门序号列表(gating sequence list)
