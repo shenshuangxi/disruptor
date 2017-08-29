@@ -1,5 +1,7 @@
 package com.sundy.disruptor;
 
+import com.sundy.disruptor.dsl.ProducerType;
+
 public final class RingBuffer<E> implements Cursored, DataProvider<E>{
 
 	public static final long INITIAL_CURSOR_VALUE = Sequence.INITIAL_VALUE;
@@ -40,10 +42,25 @@ public final class RingBuffer<E> implements Cursored, DataProvider<E>{
 	}
 	
 	public static <E> RingBuffer<E> createSingleProducer(EventFactory<E> eventFactory, int bufferSize, WaitStrategy waitStrategy){
-		SingleProcedureSequencer sequencer = new SingleProceducerSequencer(bufferSize, waitStrategy);
-		return new RingBuffer<E>(eventFactory, sequencer)
+		SingleProceducerSequencer sequencer = new SingleProceducerSequencer(bufferSize, waitStrategy);
+		return new RingBuffer<E>(eventFactory, sequencer);
 	}
 	
+	public static <E> RingBuffer<E> createSingleProducer(EventFactory<E> eventFactory, int bufferSize){
+		SingleProceducerSequencer sequencer = new SingleProceducerSequencer(bufferSize, new BlockingWaitStrategy());
+		return new RingBuffer<E>(eventFactory, sequencer);
+	}
+	
+	public static <E> RingBuffer<E> create(ProducerType producerType, EventFactory<E> eventFactory, int bufferSize, WaitStrategy waitStrategy){
+		switch (producerType) {
+		case SINGLE:
+			return createSingleProducer(eventFactory, bufferSize, waitStrategy);
+		case MULTI:
+			return createMultiProducer(eventFactory, bufferSize, waitStrategy);
+		default:
+			throw new IllegalStateException(producerType.toString());
+		}
+	}
 	
 	private void fill(EventFactory<E> eventFactory) {
 		for(int i=0;i<entries.length;i++){
@@ -52,9 +69,31 @@ public final class RingBuffer<E> implements Cursored, DataProvider<E>{
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public E get(long sequence) {
-		// TODO Auto-generated method stub
-		return null;
+		return (E) entries[(int)sequence&indexMask];
+	}
+	
+	
+	public long next(){
+		return sequencer.next();
+	}
+	
+	public long next(int n){
+		return sequencer.next(n);
+	}
+	
+	public long tryNext() throws InsufficientCapacityException{
+		return sequencer.tryNext();
+	}
+	
+	public long tryNext(int n) throws InsufficientCapacityException{
+		return sequencer.tryNext(n);
+	}
+	
+	public void resetTo(long sequence){
+		sequencer.clain(sequence);
+		sequencer.publish(sequence);
 	}
 
 	public long getCursor() {
