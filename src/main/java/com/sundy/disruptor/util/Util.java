@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
 
-import com.sundy.disruptor.Sequence;
+import com.sundy.disruptor.core.sequence.Sequence;
 
 import sun.misc.Unsafe;
 
