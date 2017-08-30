@@ -151,12 +151,29 @@ public final class MultiProducerSequencer extends AbstractSequencer {
 		setAvailableBufferValue(calculateIndex(sequence), calculateAvailabilityFlag(sequence));
 	}
 
-	
-
 
 	private void setAvailableBufferValue(int index, int flag) {
 		long bufferAddress = (index * SCALE) + BASE;
 		UNSAFE.putOrderedLong(availableBuffer, bufferAddress, flag);
+	}
+	
+	@Override
+	public boolean isAvailable(long sequence) {
+		int index = calculateIndex(sequence);
+		int flag = calculateAvailabilityFlag(sequence);
+		long bufferAddress = (index * SCALE) + BASE;
+		return UNSAFE.getLongVolatile(availableBuffer, bufferAddress) == flag;
+	}
+	
+	@Override
+	public long getHighestPublishedSequence(long lowerBound,
+			long availableSequence) {
+		for(long sequence=lowerBound; sequence < availableSequence; sequence++){
+			if(!isAvailable(sequence)){
+				return sequence -1;
+			}
+		}
+		return availableSequence;
 	}
 	
 	
