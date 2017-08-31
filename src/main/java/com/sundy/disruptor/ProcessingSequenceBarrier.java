@@ -7,7 +7,7 @@ import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException;
  * @author Administrator
  *
  */
-public class ProcessingSequenceBarrier implements SequenceBarrier {
+public final class ProcessingSequenceBarrier implements SequenceBarrier {
 
 	private final WaitStrategy waitStrategy;
 	private final Sequence dependentSequence;
