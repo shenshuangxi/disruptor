@@ -1,6 +1,8 @@
 package com.sundy.disruptor.core.eventprocessor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import com.sundy.disruptor.core.RingBuffer;
 import com.sundy.disruptor.core.DataProvider;
 import com.sundy.disruptor.core.LifecycleAware;
 import com.sundy.disruptor.core.eventhandler.EventHandler;
@@ -13,6 +15,12 @@ import com.sundy.disruptor.core.sequence.Sequence;
 import com.sundy.disruptor.core.sequencebarrier.SequenceBarrier;
 import com.sundy.disruptor.core.timeouthandler.TimeoutHandler;
 
+/**
+ * 辅助类，用于批量处理从{@link RingBuffer}中获取的事件，并将这些可用事件送到 {@link EventHandler} 处理
+ * @author Administrator
+ *
+ * @param <T>
+ */
 public final class BatchEventProcessor<T> implements EventProcessor {
 
 	private final AtomicBoolean running = new AtomicBoolean(false);

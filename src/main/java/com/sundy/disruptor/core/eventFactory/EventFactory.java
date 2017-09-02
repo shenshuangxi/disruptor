@@ -1,6 +1,7 @@
 package com.sundy.disruptor.core.eventFactory;
 
-import com.sundy.disruptor.RingBuffer;
+import com.sundy.disruptor.core.RingBuffer;
+
 
 /**
  * {@link RingBuffer} 提前调用，用于填充ringbuffer

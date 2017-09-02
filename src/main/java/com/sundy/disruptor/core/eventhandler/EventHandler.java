@@ -1,6 +1,6 @@
 package com.sundy.disruptor.core.eventhandler;
 
-import com.sundy.disruptor.RingBuffer;
+import com.sundy.disruptor.core.RingBuffer;
 
 /**
  * 回调接口的实现类，该实现类用于处理事件， 被{@link RingBuffer} 使用

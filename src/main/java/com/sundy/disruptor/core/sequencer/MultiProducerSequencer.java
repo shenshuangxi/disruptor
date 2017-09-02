@@ -4,7 +4,7 @@ import java.util.concurrent.locks.LockSupport;
 
 import sun.misc.Unsafe;
 
-import com.sundy.disruptor.InsufficientCapacityException;
+import com.sundy.disruptor.core.exception.InsufficientCapacityException;
 import com.sundy.disruptor.core.sequence.Sequence;
 import com.sundy.disruptor.core.waitstrategy.WaitStrategy;
 import com.sundy.disruptor.util.Util;

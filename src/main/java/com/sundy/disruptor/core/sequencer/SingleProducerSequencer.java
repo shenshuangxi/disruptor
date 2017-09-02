@@ -1,6 +1,6 @@
 package com.sundy.disruptor.core.sequencer;
 
-import com.sundy.disruptor.InsufficientCapacityException;
+import com.sundy.disruptor.core.exception.InsufficientCapacityException;
 import com.sundy.disruptor.core.sequence.Sequence;
 import com.sundy.disruptor.core.waitstrategy.WaitStrategy;
 import com.sundy.disruptor.util.Util;

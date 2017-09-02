@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
 
+import com.sundy.disruptor.core.eventprocessor.EventProcessor;
 import com.sundy.disruptor.core.sequence.Sequence;
 
 import sun.misc.Unsafe;
@@ -55,6 +56,19 @@ public final class Util {
 			++r;
 		}
 		return r;
+	}
+
+	/**
+	 * 根据eventProcessors数组获取每一个eventProcessor中的sequence
+	 * @param eventProcessors
+	 * @return
+	 */
+	public static Sequence[] getSequencesFor(EventProcessor[] eventProcessors) {
+		Sequence[] sequences = new Sequence[eventProcessors.length];
+		for (int i = 0; i < sequences.length; i++) {
+			sequences[i] = eventProcessors[i].getSequence();
+		}
+		return sequences;
 	}
 
 }

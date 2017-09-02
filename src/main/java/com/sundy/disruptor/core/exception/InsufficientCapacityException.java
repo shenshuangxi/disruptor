@@ -1,4 +1,7 @@
-package com.sundy.disruptor;
+package com.sundy.disruptor.core.exception;
+
+import com.sundy.disruptor.core.RingBuffer;
+
 
 /**
  * <p>Exception thrown when the it is not possible to insert a value into
